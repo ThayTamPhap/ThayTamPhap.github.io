@@ -4,7 +4,7 @@
   "display": "fullscreen",
   "icons": [
     {
-      "src": "dharma-wheel.png",
+      "src": "/assets/dharma-wheel.png",
       "sizes": "256x256",
       "type": "image/png"
     }
