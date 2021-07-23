@@ -2,8 +2,8 @@
 
 ```sh
 # brew install sox opus-tools
-sox speech.mp3 -t s16 --rate 32000 -c 1 - | opusenc --downmix-mono --bitrate 12  \
-  --raw-rate 32000 --raw-bits 16 --raw-chan 1 - speech.opus
+sox file.mp3 -t s16 --rate 32000 -c 1 - | opusenc --downmix-mono --bitrate 12  \
+  --raw-rate 32000 --raw-bits 16 --raw-chan 1 - file.ogg
 ```
 
 ## Text-to-Speech
