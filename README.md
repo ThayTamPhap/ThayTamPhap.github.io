@@ -15,7 +15,9 @@ sox file.mp3 -t s16 --rate 32000 -c 1 - | opusenc --downmix-mono --bitrate 12  \
 
 ## Start a local server
 
-`ruby -run -e httpd . -p 3000`
+```sh
+ruby -run -e httpd . -p 3000
+```
 
 
 ## Image optimized for web 

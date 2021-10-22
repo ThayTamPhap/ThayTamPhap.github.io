@@ -533,6 +533,7 @@ document.body.appendChild(downloadQuoteImageLink);
 function luuAnh() {
 	// document.exitFullscreen();
 	var filename = location.hash.replace("#","")+".png";
+	console.log("filename: ", filename);
 	var quote = document.getElementById("quote");
 	Array.from(quote.getElementsByClassName("hilite")).forEach(elem => elem.className = "");
 	html2canvas(quote).then(function(canvas) {
