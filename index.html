@@ -1,3 +1,4 @@
+
 <!DOCTYPE html><html lang="vi-VN">
 <head>
 <meta charset="utf-8">
@@ -80,18 +81,18 @@ ul.hilite > li { padding: 0.5em; padding-left: 0px; margin-left: -15px;  }
 </div>
 <div id="secondHalf">
 	<button id="nghePhap" onclick="nghePhap()">Nghe pháp</button>
-	<button onclick="ngheThuNoi()">Thư nói</button>
+<!-- 	<button onclick="ngheThuNoi()">Thư nói</button>
 	<button onclick="vuotQuaDeDuoi()">Vượt qua dễ duôi</button>
-	<div id="thuyetPhapContainer" style="display: none">
+ -->	<div id="thuyetPhapContainer">
 	<ul id="thuyetPhap" style="list-style-type:none; padding-left: 0; padding-bottom: 0.5em; margin-bottom:1em;">
-		<li><a href="phaps/HuongDanRaQuetVaThuGianToanThan.ogg?https://sutamphap.com/wp-content/uploads/2019/08/HuongDanRaQuetVaThuGianToanThan.mp3">Thư Giãn</a></li>
+<!-- 		<li><a href="phaps/HuongDanRaQuetVaThuGianToanThan.ogg?https://sutamphap.com/wp-content/uploads/2019/08/HuongDanRaQuetVaThuGianToanThan.mp3">Thư Giãn</a></li>
 		<li><a href="phaps/tutaptrongCS_ThienTamTu.ogg?https://sutamphap.com/wp-content/uploads/2019/06/tutaptrongCS_ThienTamTu.mp3">Thiền Tâm Từ</a></li>
 		<li><a id="tutaptrongCS_NiemChet" href="phaps/tutaptrongCS_NiemChet.ogg?https://sutamphap.com/wp-content/uploads/2019/06/tutaptrongCS_NiemChet.mp3">Niệm chết</a></li>
-	</ul>
+ -->	</ul>
 	<ul id="thuNoi" style="list-style-type:none; padding-left: 0; padding-bottom: 0.5em; margin-bottom:1em; display: none"></ul>
 	<!-- <div style="border-bottom: 1px; border-bottom-style: dashed; border-bottom-color: #999;"></div> -->
 	</div>
-	<div id="vuotQuaDeDuoi"> 
+	<div id="vuotQuaDeDuoi" style="display: none"> 
 	<ol style="list-style-type:none; padding-left: 0;">
 		<div class="vqdd">
 			<p>Dễ duôi là một chướng ngại lớn nhất trên đường tu tập, cũng như trong sự rèn luyện, vươn lên trong cuộc sống của một con người bình thường. Dễ duôi là hành động theo bản năng, theo bất cứ đòi hỏi nào của tham sân si, của các trạng thái tâm bất thiện, một cách vô điều kiện mà không có ý định kháng cự.</p>
@@ -153,7 +154,7 @@ ul.hilite > li { padding: 0.5em; padding-left: 0px; margin-left: -15px;  }
 </div>
 </body>
 <script>
-var onVuotQuaDeDuoi = true;
+var onVuotQuaDeDuoi = false;
 function vuotQuaDeDuoi() {
 	document.getElementById("thuyetPhapContainer").style = "display: none";
 	document.getElementById("vuotQuaDeDuoi").style = "display: true";
@@ -281,7 +282,18 @@ xmlhttp.onreadystatechange = function () {
 		if (document.useCookie)
 		document.selectedPhapIndexes = (document.cookie || "-1").split(',').map(x => parseInt(x));
 		var ul = document.getElementById("thuyetPhap");
+		
 		for (var i = data.phaps.length-2, elem; i >= 0; i--) {
+
+			var skip = true;
+			for (var j = data.subtitled.length-1; j >= 0; j--) {
+				if (data.phaps[i].audio.includes(data.subtitled[j])) {
+					skip = false;
+					continue;
+				}
+			}
+			if (skip === true) { continue; }
+
 			elem = document.createElement('li');
 			str = ""
 			if (document.selectedPhapIndexes) {
@@ -306,7 +318,6 @@ xmlhttp.onreadystatechange = function () {
 			return;
 		}
 
-		// document.getElementById("tutaptrongCS_NiemChet").click();
 		var chosen = data.subtitled[Math.round(Math.random()*(data.subtitled.length-1))];
 
 		document.phaps.forEach(function (phap) {
@@ -484,8 +495,6 @@ function speakQuote(i) {
 	// audio.innerHTML = '<source src="quotes/'+(quoteIndex)+'.ogg" />' + '<source src="quotes/'+(quoteIndex)+'.mp3" />';
 }
 
-document.autopopstate = false;
-
 function fixTimmingIndex() {
 	if (document.timmingIndex < 0) { document.timmingIndex = 0; }
 	if (document.timmingIndex > document.timmings.length) {
@@ -493,14 +502,34 @@ function fixTimmingIndex() {
 	}
 }
 
-function initApp(from) {
-	console.log(from, document.autopopstate);
+// - - - - - - -
 
-	if (document.autopopstate) {
+window.onpopstate = function () { 
+	// document.autopopstate = false;
+	initApp('onpopstate event'); 
+};
+
+function initApp(from) {
+	console.log("initApp from:'", from, "'", document.autopopstate);
+	console.log(location.hash);
+
+	if (document.autopopstate === true) {
 		document.autopopstate = false;
 		return;
 	}
 	
+	if (document.autopopstate === undefined &&
+		location.hash.includes("phaps/")) {
+		// Load từ cửa sổ mới mở để nghe bài pháp nhất định
+		var name = location.hash.replace("#phaps/", "");
+		var file = location.hash.substr(1,) + ".ogg";
+
+		document.autopopstate = false;
+		// playPhap(file, name);
+		// return;
+	}
+
+
 	if (document.nghepath && location.hash.includes(document.nghepath)) {
 		document.phapPlaying = true;
 		document.timmingIndex = parseInt(location.hash.replace(/#.+?-/,""));
@@ -517,11 +546,6 @@ function initApp(from) {
 }
 
 initApp('After quotes loaded');
-
-window.onpopstate = function () { 
-	// document.autopopstate = false; 
-	initApp('onpopstate'); 
-};
 
 </script>
 
