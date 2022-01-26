@@ -171,16 +171,20 @@ function vuotQuaDeDuoi() {
 
 var onNghePhap = false;
 function nghePhap() {
-	var ul = document.getElementById("thuyetPhap"), items = ul.children, i=items.length+1;
+	var ul = document.getElementById("thuyetPhap"), 
+	items = ul.children, i=items.length+1;
+
 	document.getElementById("thuyetPhapContainer").style = "display: true";
 	document.getElementById("vuotQuaDeDuoi").style = "display: none";
 	document.getElementById("thuyetPhap").style = "display: true";
 	document.getElementById("thuNoi").style = "display: none";
+	
 	if (onNghePhap) {
 		for (; i > 0; i--) {
-			ul.appendChild(items[(Math.random()*(i-3)|0)+3]); 
+			ul.appendChild(items[Math.random()*i]);
 		}
 	}
+
 	onNghePhap = true;
 	onThuNoi = false;
 	onVuotQuaDeDuoi = false;
