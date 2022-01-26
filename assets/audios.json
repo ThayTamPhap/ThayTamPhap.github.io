@@ -7,7 +7,7 @@
 "phaps/tutaptrongCS_CuHuychChoCuocDoi",
 "phaps/buocdautapthien_TuChoMinhHayChoNguoi",
 "phaps/tutaptrongCS_PhatTrienTinhGiacVaTue",
-// "phaps/20161105TaoPhuoc",
+// "phaps/benhCuaNguoiTu",
 "phaps/Tinh-Tan-fix",
 "phaps/tutaptrongCS_7GiaiDoanThanhTinh"
 ],
@@ -65,7 +65,7 @@
 
 "selected": [],
 "phaps": [
-
+{"audio":"phaps/benhCuaNguoiTu.mp3?phaps/benhCuaNguoiTu.mp3","id":"benhcuanguoitu_edited","title":"Bệnh của người tu"},
 {"audio":"phaps/KinhHanhPhuc10.ogg?https://archive.org/download/KinhHanhPhuc/010.baiGiangKinhHanhPhuc10.mp3","id":"KinhHanhPhuc10","title":"Kinh Hạnh Phúc 10"},
 {"audio":"phaps/KinhHanhPhuc9.ogg?https://archive.org/download/KinhHanhPhuc/009.baiGiangKinhHanhPhuc9.mp3","id":"KinhHanhPhuc9","title":"Kinh Hạnh Phúc 9"},
 {"audio":"phaps/KinhHanhPhuc8.ogg?https://archive.org/download/KinhHanhPhuc/008.baiGiangKinhHanhPhuc8.mp3","id":"KinhHanhPhuc8","title":"Kinh Hạnh Phúc 8"},
